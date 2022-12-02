@@ -27,12 +27,32 @@ If I wanted to make a branch called `fixed-readme-typos` then I would do `git ch
 
 There are other ways to create a branch and then check it out, but this command does it all in one. If all goes well then you will notice in the bottom left corver of VSCode that instead of saying `main` it will have switched to your new branch name. 
 
-### Note: The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all your good code in the original branch. You are now ready to code in your new branch!
+## Step 3: Code
 
-## Step 3: Make your new branch public 
+The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all your good code in the original branch. You are now ready to code in your new branch!
+
+## Step 4: Making a remote copy of your branch
+
+**NOTE:** You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
+
+### Making a remote copy of your branch
 
 The new branch you created is only **local** to your computer right now but you can make it public so that you have a remote (backup) copy in case something goes wrong, or just so your team members can see/checkout your new branch. 
 
-### Note: You don't necessarily need to do this until you are done coding and ready to push your new branch's code to the main branch, but remember the risk of not having a remote copy! 
+Use `git push origin your-branch-name` to create a remote copy of your new branch. The output should look something like: 
 
-test changes
+![Console output after doing git push to create a remote branch](/images/git-push-branch.png)
+
+In GitHub specifically, you'll notice that if you go to your repository's main page there will be a new popup: 
+
+![Compare and create pull request popup on GitHub repository page](/images/git-new-branch.png)
+
+## Step 5: Aligning your branch with the one you want to merge your changes into
+
+This step is **VERY IMPORTANT** and can also be the hardest one. You need to make sure that your branch has all of the latest changes from `main` or whatever branch you want to merge the changes of your branch into. 
+
+
+
+## Step 6: Creating a pull request 
+
+Now that your new branch is done and had been made remote, you're ready to merge your branch's new changes into the main branch. 
