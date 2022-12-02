@@ -76,4 +76,20 @@ If VSCode is screaming at you and you tried to rebase but it's stuck and everyth
 
 ## Step 6: Creating a pull request 
 
-Now that your new branch is done and had been made remote, you're ready to merge your branch's new changes into the main branch. 
+Now that your new branch is done, it has been made remote, and it's been updated with main's most recent changes, you're ready to merge your branch's new changes into the main branch. 
+
+Go to your repository's main page (or GitHub desktop) and find your branch. If you just pushed your branch then there might be a big popup that will take you to it, otherwise you can click "branches":
+
+![Branches button next to main branch name in GitHub repository main page](/images/git-branches.png)
+
+Find your branch and click "New pull request". This will take you to a page that should say something like "Able to merge" and lets you provide a title and description of what your changes were: 
+
+![Creating a pull request in GitHub with description text box](/images/git-create-pr.png)
+
+You can also verify that all your changes are as they should be by scrolling down and looking at the individual files that were changed: 
+
+![GitHub list of files and places in the files that were changed in the branch](/images/git-pr-changes.png)
+
+Press the "Create Pull Request" button and your pull request will be ready to be reviewed by your team! 
+
+Usually the project lead or whoever approves your pull request will actually merge it, but in case you need to do it there will likely be a big "Merge Changes" button once it gets approved. 
