@@ -1,5 +1,19 @@
 # My basic guide to using git branches to share with my friends :D 
 
+## Quick and simple steps (context of each step is provided in the corresponding sections after this one)
+
+[Step 1](#step-1-make-sure-you-are-in-the-branch-that-you-want-to-base-your-new-branch-off-of): Checkout the main branch with `git checkout main`. Update your main branch with `git pull`. <br>
+
+[Step 2](#step-2-create-your-new-branch): Create your new branch with `git checkout -b your-branch-name` <br>
+
+[Step 3](#step-3-code-and-finish-whatever-you-need-done): Code and finish whatever you need done (you could do step 4 first then this if you want a remote copy of your branch for a backup) <br>
+
+[Step 4](#step-4-making-a-remote-copy-of-your-branch): Make a remote copy of your branch by doing `git push origin your-branch-name`. You can verify that it worked on your repository's GitHub page, under the "branches" section. <br>
+
+[Step 5](#step-5-aligning-your-branch-with-the-one-you-want-to-merge-your-changes-into): Pull all the latest changes from main into your branch with `git pull origin main --rebase`. Details on dealing with merge conflicts are in the step 5 section of this doc. 
+
+[Step 6](#step-6-creating-a-pull-request): Go to your repository's GitHub page (or GitHub Desktop), find your branch, click the "New pull request", write a descriptive title and description of your changes in the provided boxes, and then click "Create pull request".
+
 ## Step 1: Make sure you are in the branch that you want to base your NEW branch off of
 
 Most likely you want to make your new branch off of `main`. Make sure you have no active changes in your code and switch to this branch by doing `git checkout main` in your console. 
@@ -17,7 +31,7 @@ You can pull to update your main a few different ways:
 
 After pulling it should either print out all the new commits that you were missing or it will just print out "Already up to date."
 
-## Step 2: Create your new branch 
+## Step 2: Create your new branch
 
 Think of a descriptive branch name based on the task that you're working on use the checkout command to create a new branch with this name. 
 
@@ -27,13 +41,13 @@ If I wanted to make a branch called `fixed-readme-typos` then I would do `git ch
 
 There are other ways to create a branch and then check it out, but this command does it all in one. If all goes well then you will notice in the bottom left corver of VSCode that instead of saying `main` it will have switched to your new branch name. 
 
-## Step 3: Code
+## Step 3: Code and finish whatever you need done
+
+**NOTE:** If you want to make a remove/backup copy of your branch, then do step 4 first. You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
 
 The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all your good code in the original branch. You are now ready to code in your new branch!
 
 ## Step 4: Making a remote copy of your branch
-
-**NOTE:** You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
 
 The new branch you created is only **local** to your computer right now but you can make it public so that you have a remote (backup) copy in case something goes wrong, or just so your team members can see/checkout your new branch. 
 
