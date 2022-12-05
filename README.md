@@ -10,14 +10,14 @@
 
 1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
-    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
 
 2. Checkout main with `git checkout main`
 3. Update your main with `git pull`
 4. Go back to your branch with `git checkout your-branch-name`
 5. Update your branch with the latest version of main with `git rebase main`
 
-    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
 
 Steps to deal with merge conflicts are listed in the [Fixing a merge conflict](#fixing-a-merge-conflict) section. 
@@ -70,14 +70,14 @@ This is **VERY IMPORTANT** and can also be the very difficult. You need to make 
 Ideally, all you need to do is the steps that were listed above:
 1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
-    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
 
 2. Checkout main with `git checkout main`
 3. Update your main with `git pull`
 4. Go back to your branch with `git checkout your-branch-name`
 5. Update your branch with the latest version of main with `git rebase main`
 
-    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
 Unfortunately, doing this will sometimes result in a **merge conflict** which can be very difficult to fix. VSCode or your terminal will scream at you if this happens and if so you can do the following optional steps:
 
