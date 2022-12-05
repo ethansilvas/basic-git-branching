@@ -123,7 +123,7 @@ The following steps are similar to the section above (for solving normal merge c
 
 4. With VSCode as your editor, retry the rebase with `git rebase main`.
 
-5. Here, you can see what I was mentioning at the start of this section. You can view the files that have merge conflicts in the "Source Control" tab on the left bar of VSCode. However, when you open them to see the conflicts you will see how impossible it is to try to resolve them this way (the normal way). This is what nbdime is for: 
+5. Here, you can see what I was mentioning at the start of this section. You can view the files that have merge conflicts in the "Source Control" tab on the left bar of VSCode. However, when you open them to see the conflicts you will see how impossible it is to try to resolve them this way (the normal way). This is what nbdime is for.
 
 (You can start at step 6 if you have VSCode set to your git editor)<br>
 
@@ -141,19 +141,19 @@ The following steps are similar to the section above (for solving normal merge c
 
 10. Now you can retry your rebase by doing `git rebase main`. 
 
-    **NOTE:** For very large notebooks with lots of outputs, doing the rebase will take a LONG time. You will know this is the case when your console looks like it's stuck/loading and if in your files you'll see a bunch of newly created files that have weird names like "MERGE&FILE" or something like that. 
+    **NOTE:** For very large notebooks with lots of outputs this will take a LONG time. You will know this is the case when your console looks like it's stuck/loading and if in your files you'll see a bunch of newly created files that have weird names like "MERGE&FILE" or something like that. 
     
     This should be fine and will hopefully take a few minutes depending on the size of your file. You will know when it's done when your console is back to normal and you'll see in the "Source Control" tab that your files look like how they normally would when using VSCode to resolve merge conflicts.
 
 11. Open the nbdime merge editor by doing `git mergetool --tool=nbdime your-notebook-name.ipynb`
 
-12. The editor will open in your browser and look something like: 
-
+    The editor will open in your browser and look something like: 
+    
     ![Header of nbd editor in browser that shows Notebook Merge and other items](/images/nbd-editor.png)
 
-13. Now you can scroll through your whole notebook cell-by-cell. Although it's a lot to take in, just know that there isn't actually a whole lot for you to do at this point!
+12. Now you can scroll through your whole notebook cell-by-cell. Although it's a lot to take in, just know that there isn't actually a whole lot for you to do at this point!
 
-14. First, you'll have to decide if you care about cell **outputs** that cause merge conflicts. In most cases, it's likely that you don't care about the outputs because as long as the actual code that you need is all in the right places, you can just rerun the whole notebook after you're done rebasing to get the outputs you want. 
+    First, you'll have to decide if you care about cell **outputs** that cause merge conflicts. In most cases, it's likely that you don't care about the outputs because as long as the actual code that you need is all in the right places you can just rerun the whole notebook after you're done rebasing to get the outputs you want. 
 
     For this reason, nbdime gives you the option at the top right of the page to clear all outputs that are causing merge conflicts: 
 
@@ -161,7 +161,7 @@ The following steps are similar to the section above (for solving normal merge c
 
     You'll notice that each cell has a "Clear outputs" button at the top right so you can also go through each of them individually to pick-and-choose which outputs to delete or keep. Although, it is usually safe just to use the "Clear conflicted cell outputs" button. 
 
-15. Now you will go through and find all of the cells that say "Conflicting cell operations" at the top bar. These can be confusing to look at, but remember what your goal is here: 
+13. Now you will go through and find all of the cells that say "Conflicting cell operations" at the top bar. These can be confusing to look at, but remember what your goal is here: 
 
     Your branch's code changes the same lines/cells of code that the new changes you're trying to pull from main do. This tool is helping you decide which lines should be kept or deleted. 
 
@@ -183,15 +183,15 @@ The following steps are similar to the section above (for solving normal merge c
 
     ![Top bar of conflicting cell that shows the resolve conflict button](/images/resolve-conflict.png)
 
-16. Continue doing step 15 for the rest of the conflicting cells in the file. 
+14. Continue doing step 13 for the rest of the conflicting cells in the file. 
 
-17. Once you have dealt with all the conflicting cells, scroll all the way back up to the top of the file where you will see buttons to save the file and close the tool. Press the save button and then the close tool button: 
+15. Once you have dealt with all the conflicting cells, scroll all the way back up to the top of the file where you will see buttons to save the file and close the tool. Press the save button and then the close tool button: 
 
     ![Save and close tool buttons at the top of the nbdime merge tool](/images/save-and-close.png)
 
     **NOTE:** I've noticed that it often will still show a popup message saying something like "there are still conflicting cells" even though I know for sure that I've dealt with all of them. If you are 99% sure that you've taken care of all of them, then it is safe to ignore this message and continue. You will still be able to double check in the next step. 
 
-18. Now you will verify that all the conflicts you resolved are correct and that the notebook has all the code that it should. If you cleared the outputs of cells, now is **NOT** the time to rerun the notebook, we will do this after the rebase is done. 
+16. Now you will verify that all the conflicts you resolved are correct and that the notebook has all the code that it should. If you cleared the outputs of cells, now is **NOT** the time to rerun the notebook, we will do this after the rebase is done. 
 
     Our current goal now is simply to look at the file and make sure the code cells are as they should be. You will see in VSCode under the "Source Control" tab that your notebook is already saved and staged for you!  
 
@@ -207,7 +207,7 @@ The following steps are similar to the section above (for solving normal merge c
 
     ![Jupyter notebook showing that both cells in a conflicted cell were kept by the merge tool](/images/kept-both-cells.png)
 
-19. Once you are confident that the notebook has all conflicts resolved, you are ready to continue this part of the rebase. 
+17. Once you are confident that the notebook has all conflicts resolved, you are ready to continue this part of the rebase. 
 
     Make sure to delete all of the generated files that end in ".orig". These are simply extra files that nbdime gives you that aren't super useful. 
 
@@ -219,11 +219,11 @@ The following steps are similar to the section above (for solving normal merge c
 
     If you are working in more than one notebook that have merge conflicts, you will have to do the previous steps for each notebook by running the same `git mergetool --tool=nbdime your-notebook-name.ipynb` command and doing the same steps for each file. 
 
-20. The continue button will continue doing each step of the rebase automatically and if there are any other steps that result in more conflicts then repeat steps 11-18. If there are no more conflicts, then your VSCode should appear as normal!
+18. The continue button will continue doing each step of the rebase automatically and if there are any other steps that result in more conflicts then repeat steps 12-17. If there are no more conflicts, then your VSCode should appear as normal!
 
-21. Now is the time to double check that all of your cell outputs are correct. You can simply rerun the entire notebook, save it, and then commit in VSCode. 
+19. Double check that all of your cell outputs are correct. You can simply rerun the entire notebook, save it, and then commit in VSCode. 
 
-22. Once the rebase is done your branch is rebased with main and you are ready to either keep coding or if you're done coding you can now move on to [Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch)
+20. Once the rebase is done your branch is rebased with main and you are ready to either keep coding or if you're done coding you can now move on to [Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch)
 
 ## Step 4 or 3: Making a remote copy of your branch
 
@@ -232,6 +232,8 @@ The new branch you created is only **local** to your computer right now but you 
 Use `git push origin your-branch-name` to create a remote copy of your branch. The output should look something like: 
 
 ![Console output after doing git push to create a remote branch](/images/git-push-branch.png)
+
+Once nice thing is that the command `git push origin your-branch-name` creates a remote version of your branch but is also the same command used to update the remote version of your branch if you've already made one! 
 
 In GitHub specifically, you'll notice that if you go to your repository's main page there will be a new popup: 
 
