@@ -1,6 +1,6 @@
 # My basic guide to using git branches to share with my friends :D 
 
-## Quick and simple steps (context of each step is provided in the corresponding sections after this one)
+## Quick and simple steps (more details of each step is provided in their corresponding sections)
 
 [Step 1](#step-1-make-sure-you-are-in-the-branch-that-you-want-to-base-your-new-branch-off-of): Checkout the main branch with `git checkout main`. Update your main branch with `git pull`. <br>
 
@@ -28,7 +28,9 @@ Steps to deal with merge conflicts are listed in the [Fixing a merge conflict](#
 
 If the reviewer finds a bug or something to change you can go back and fix it in your code, commit your changes, and update your remote branch with `git push origin your-branch-name`. The pull request will automatically know that you've updated the branch  <br><br>
 
-**NOTE:** If you want to make a remove/backup copy of your branch, then do step 4 before step 3. You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
+**Should I do step 3 or 4 first?** - If you want to make a remote/backup copy of your branch, then do step 4 before step 3. You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster! <br><br>
+
+---
 
 ## Step 1: Make sure you are in the branch that you want to base your NEW branch off of
 
@@ -59,23 +61,23 @@ There are other ways to create a branch and then check it out, but this command 
 
 ## Step 3 or 4: Code what you need and keep your branch up to date
 
-The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all your good code in the original branch. You are now ready to code in your new branch!
+The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all the good code in the original branch. You are now ready to code in your new branch!
 
 ### Keeping your branch up to date 
 
-This step is **VERY IMPORTANT** and can also be the hardest one. You need to make sure that your branch is up to date with `main` or whatever branch you want to merge the changes of your branch into. 
+This is **VERY IMPORTANT** and can also be the very difficult. You need to make sure that your branch is up to date with `main` or whatever branch you want to merge the changes of your branch into. 
 
 Ideally, all you need to do is the steps that were listed above:
 1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
-IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
 
 2. Checkout main with `git checkout main`
 3. Update your main with `git pull`
 4. Go back to your branch with `git checkout your-branch-name`
 5. Update your branch with the latest version of main with `git rebase main`
 
-IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
+    IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
 Unfortunately, doing this will sometimes result in a **merge conflict** which can be very difficult to fix. VSCode or your terminal will scream at you if this happens and if so you can do the following optional steps:
 
