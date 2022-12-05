@@ -6,7 +6,9 @@
 
 [Step 2](#step-2-create-your-new-branch): Create your new branch with `git checkout -b your-branch-name` <br>
 
-[Step 3 or 4](#step-3-or-4-code-what-you-need-and-keep-your-branch-up-to-date): Code whatever you need to do, but remember that you'll need to keep your branch up to date with main. Whenever you're at a good stopping point while you're coding, and you know that there are new changes in main, update your branch with the latest version of main by doing:
+[Step 3 or 4](#step-3-or-4-code-what-you-need-and-keep-your-branch-up-to-date): Code whatever you need to do but remember that you'll need to keep your branch up to date with main. 
+
+At the very least you can wait to update your branch until you are done and ready to merge your changes to main, but it's better to consistently update your branch as you're working on it. Whenever you're at a good stopping point while you're coding, and you know that there are new changes in main, update your branch with the latest version of main by doing:
 
 1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
@@ -15,7 +17,7 @@
 2. Checkout main with `git checkout main`
 3. Update your main with `git pull`
 4. Go back to your branch with `git checkout your-branch-name`
-5. Update your branch with the latest version of main with `git rebase main`
+5. Update your branch with the latest version of main with `git rebase main`. This is basically the same thing as "merging", the terms are used interchangeably in this doc but there are [differences](https://www.atlassian.com/git/tutorials/merging-vs-rebasing).
 
     IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
