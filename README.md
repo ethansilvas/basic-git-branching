@@ -107,6 +107,8 @@ Unfortunately, doing this will sometimes result in a **merge conflict** which ca
 
 10. Keep doing steps 6-9 until the rebase is done. VSCode is pretty good at automatically doing this but if it doesn't seem like it's doing anything try doing `git rebase --continue`. 
 
+11. Once the rebase is done your branch is rebased with main and you are ready to either keep coding or if you're done coding you can now move on to [Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch)
+
 ### Fixing merge conflicts in a Jupyter notebook
 
 Git tracks changes in Jupyter notebooks in their raw format which is a giant JSON file that makes it basically impossible to resolve merge conflicts the normal way. There are a few ways to solve this but I have found [nbdime](https://nbdime.readthedocs.io/en/latest/) to be incredibly easy to use for what I need it for. 
@@ -175,7 +177,7 @@ The following steps are similar to the section above (for solving normal merge c
 
     ![Same picture of conflicting cell but the top cell is marked with the delete cell button](/images/delete-cell.png)
 
-    If you want to delete both cells, then check both "Delete cell" buttons. If you want to keep both cells, then you won't have to do anything! 
+    If you want to delete both cells, then check both "Delete cell" buttons. If you want to keep both cells, then just leave them alone and press the "Resolve conflict" button. 
 
     Once you have decided what to do with these code blocks, mark this conflicted cell as completed by clicking the "Resolve conflict" button at the top right: 
 
@@ -191,12 +193,37 @@ The following steps are similar to the section above (for solving normal merge c
 
 18. Now you will verify that all the conflicts you resolved are correct and that the notebook has all the code that it should. If you cleared the outputs of cells, now is **NOT** the time to rerun the notebook, we will do this after the rebase is done. 
 
-    Our current goal is simply to look at the file and make sure the code cells are as they should be. You will see in VSCode under the "Source Control" tab that your notebook is already saved and staged for you!  
+    Our current goal now is simply to look at the file and make sure the code cells are as they should be. You will see in VSCode under the "Source Control" tab that your notebook is already saved and staged for you!  
 
     ![VSCode source control files that have the merged notebook and the auto generated .orig notebook file](/images/staged-conflict-file.png)
 
+    Open the notebook that you resolved the conflicts for and you will hopefully see all the code you decided to keep. 
 
-If you are working in more than one notebook that have merge conflicts, you will have to do this for each notebook by running the same `git mergetool --tool=nbdime your-notebook-name.ipynb` command and doing the same steps for each file. 
+    The picture below shows the result after deleting the top cell from the previous image examples, notice that only the cell we decided to keep is there: 
+
+    ![Jupyter notebook showing that only the cells selected in the merge tool were kept](/images/kept-cell.png)
+
+    If you decided to keep both cells, then both should appear!
+
+    ![Jupyter notebook showing that both cells in a conflicted cell were kept by the merge tool](/images/kept-both-cells.png)
+
+19. Once you are confident that the notebook has all conflicts resolved, you are ready to continue this part of the rebase. 
+
+    Make sure to delete all of the generated files that end in ".orig". These are simply extra files that nbdime gives you that aren't super useful. 
+
+    ![VSCode showing that there is the edited notebook and also a copy of that notebook but ending in .orig](/images/staged-conflict-file.png)
+
+    You can then continue the rebase by pressing the "Continue button" shown in the "Source control" tab of VSCode: 
+
+    ![Continue button in source control tab that will continue the rebase](/images/rebase-continue.png)
+
+    If you are working in more than one notebook that have merge conflicts, you will have to do the previous steps for each notebook by running the same `git mergetool --tool=nbdime your-notebook-name.ipynb` command and doing the same steps for each file. 
+
+20. The continue button will continue doing each step of the rebase automatically and if there are any other steps that result in more conflicts then repeat steps 11-18. If there are no more conflicts, then your VSCode should appear as normal!
+
+21. Now is the time to double check that all of your cell outputs are correct. You can simply rerun the entire notebook, save it, and then commit in VSCode. 
+
+22. Once the rebase is done your branch is rebased with main and you are ready to either keep coding or if you're done coding you can now move on to [Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch)
 
 ## Step 4 or 3: Making a remote copy of your branch
 
