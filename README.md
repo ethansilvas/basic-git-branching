@@ -6,13 +6,29 @@
 
 [Step 2](#step-2-create-your-new-branch): Create your new branch with `git checkout -b your-branch-name` <br>
 
-[Step 3](#step-3-code-and-finish-whatever-you-need-done): Code and finish whatever you need done (you could do step 4 first then this if you want a remote copy of your branch for a backup) <br>
+[Step 3 or 4](#step-3-or-4-code-what-you-need-and-keep-your-branch-up-to-date): Code whatever you need to do, but remember that you'll need to keep your branch up to date with main. Whenever you're at a good stopping point while you're coding, and you know that there are new changes in main, update your branch with the latest version of main by doing:
 
-[Step 4](#step-4-making-a-remote-copy-of-your-branch): Make a remote copy of your branch by doing `git push origin your-branch-name`. You can verify that it worked on your repository's GitHub page, under the "branches" section. <br>
+1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
-[Step 5](#step-5-aligning-your-branch-with-the-one-you-want-to-merge-your-changes-into): Pull all the latest changes from main into your branch with `git pull origin main --rebase`. Details on dealing with merge conflicts are in the step 5 section of this doc. 
+IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
 
-[Step 6](#step-6-creating-a-pull-request): Go to your repository's GitHub page (or GitHub Desktop), find your branch, click the "New pull request", write a descriptive title and description of your changes in the provided boxes, and then click "Create pull request".
+2. Checkout main with `git checkout main`
+3. Update your main with `git pull`
+4. Go back to your branch with `git checkout your-branch-name`
+5. Update your branch with the latest version of main with `git rebase main`
+
+IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
+
+
+Steps to deal with merge conflicts are listed in the [Fixing a merge conflict](#fixing-a-merge-conflict) section. 
+
+[Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch): Make a remote copy of your branch by doing `git push origin your-branch-name`. You can verify that it worked on your repository's GitHub page, under the "branches" section. <br>
+
+[Step 5](#step-5-creating-a-pull-request): Go to your repository's GitHub page (or GitHub Desktop), find your branch, click the "New pull request", write a descriptive title and description of your changes in the provided boxes, and then click "Create pull request". After that, you're all done and someone will likely review your changes. 
+
+If the reviewer finds a bug or something to change you can go back and fix it in your code, commit your changes, and update your remote branch with `git push origin your-branch-name`. The pull request will automatically know that you've updated the branch  <br><br>
+
+**NOTE:** If you want to make a remove/backup copy of your branch, then do step 4 before step 3. You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
 
 ## Step 1: Make sure you are in the branch that you want to base your NEW branch off of
 
@@ -41,31 +57,27 @@ If I wanted to make a branch called `fixed-readme-typos` then I would do `git ch
 
 There are other ways to create a branch and then check it out, but this command does it all in one. If all goes well then you will notice in the bottom left corver of VSCode that instead of saying `main` it will have switched to your new branch name. 
 
-## Step 3: Code and finish whatever you need done
-
-**NOTE:** If you want to make a remove/backup copy of your branch, then do step 4 first. You don't technically need to make a remote copy of your branch until you are done coding and ready to push your new branch's code to the main branch, but without a remote copy you won't have a backup of your branch in case of disaster!
+## Step 3 or 4: Code what you need and keep your branch up to date
 
 The main purpose of branching is to basically make a copy of a branch, `main` for example, for you to implement your new feature without worrying about messing up all your good code in the original branch. You are now ready to code in your new branch!
 
-## Step 4: Making a remote copy of your branch
+### Keeping your branch up to date 
 
-The new branch you created is only **local** to your computer right now but you can make it public so that you have a remote (backup) copy in case something goes wrong, or just so your team members can see/checkout your new branch. 
+This step is **VERY IMPORTANT** and can also be the hardest one. You need to make sure that your branch is up to date with `main` or whatever branch you want to merge the changes of your branch into. 
 
-Use `git push origin your-branch-name` to create a remote copy of your new branch. The output should look something like: 
+Ideally, all you need to do is the steps that were listed above:
+1. Commit any changes you have in your branch (you can't have uncommitted changes when rebasing)
 
-![Console output after doing git push to create a remote branch](/images/git-push-branch.png)
+IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Make sure the remote version of your branch has the latest committed changes with `git push origin your-branch-name`
 
-In GitHub specifically, you'll notice that if you go to your repository's main page there will be a new popup: 
+2. Checkout main with `git checkout main`
+3. Update your main with `git pull`
+4. Go back to your branch with `git checkout your-branch-name`
+5. Update your branch with the latest version of main with `git rebase main`
 
-![Compare and create pull request popup on GitHub repository page](/images/git-new-branch.png)
+IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first) DO THIS, IF NOT THEN SKIP: Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
-## Step 5: Aligning your branch with the one you want to merge your changes into
-
-This step is **VERY IMPORTANT** and can also be the hardest one. You need to make sure that your branch has all of the latest changes from `main` or whatever branch you want to merge the changes of your branch into. 
-
-Ideally, all you need to do is `git pull origin main --rebase` or just `git pull origin main` (rebase is better in my opinion since it just puts all of your branch's commits after the latest ones in main, rather than mixing them in between based on when the commits were made).
-
-Unfortunately, doing this pull will sometimes result in a **merge conflict** which can be very difficult to fix. VSCode or your terminal will scream at you if this happens and if so you can do the following optional steps:
+Unfortunately, doing this will sometimes result in a **merge conflict** which can be very difficult to fix. VSCode or your terminal will scream at you if this happens and if so you can do the following optional steps:
 
 ### Fixing a merge conflict
 
@@ -73,7 +85,7 @@ If VSCode is screaming at you and you tried to rebase but it's stuck and everyth
 
 1. If the rebase failed and you are stuck you can do `git rebase --abort`. 
 2. You will want to set VSCode to be your git editor by doing `git config --global core.editor "code --wait"`
-3. With VSCode as your editor, retry the rebase with `git pull origin main --rebase`
+3. With VSCode as your editor, retry the rebase with `git rebase main`
 4. Now VSCode will go through each of the commits that make a merge conflict and will open the corresponding files with edits that look like: 
 
 ![Current/incoming changes in a VSCode window to resolve merge conflicts](/images/vscode-merge-conflict.png) <br>
@@ -87,8 +99,19 @@ If VSCode is screaming at you and you tried to rebase but it's stuck and everyth
 8. Press the commit button to finish this part of the rebase. You can optionally change the commit message but it's better to just keep the original one that it has in there. 
 9. Keep doing steps 5-8 until the rebase is done. VSCode is pretty good at automatically doing this but if it doesn't seem like it's doing anything try doing `git rebase --continue`. 
 
+## Step 4 or 3: Making a remote copy of your branch
 
-## Step 6: Creating a pull request 
+The new branch you created is only **local** to your computer right now but you can make it public so that you have a remote (backup) copy in case something goes wrong, or just so your team members can see/checkout your new branch. 
+
+Use `git push origin your-branch-name` to create a remote copy of your branch. The output should look something like: 
+
+![Console output after doing git push to create a remote branch](/images/git-push-branch.png)
+
+In GitHub specifically, you'll notice that if you go to your repository's main page there will be a new popup: 
+
+![Compare and create pull request popup on GitHub repository page](/images/git-new-branch.png)
+
+## Step 5: Creating a pull request 
 
 Now that your new branch is done, it has been made remote, and it's been updated with main's most recent changes, you're ready to merge your branch's new changes into the main branch. 
 
