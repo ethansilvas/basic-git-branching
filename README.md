@@ -93,7 +93,7 @@ Unfortunately, doing this will sometimes result in a **merge conflict** which ca
 
 5. In your "Source Control" tab on the left bar, you will notice that there will be a list of files that have conflicts. You can tell that they have conflicts by opening them and looking for big blocks that look like: 
 
-![Current/incoming changes in a VSCode window to resolve merge conflicts](/images/vscode-merge-conflict.png) <br>
+    ![Current/incoming changes in a VSCode window to resolve merge conflicts](/images/vscode-merge-conflict.png) <br>
 
 6. Each of these cases that VSCode is marking with "Current Change" and "Incoming Change" are places where Git can't decide which change it should make. These issues usually happen when people make different changes to the same line in the file. Go through each of these and use your best judgement to decide which lines of code should remain.
 
@@ -101,7 +101,7 @@ Unfortunately, doing this will sometimes result in a **merge conflict** which ca
 
 8. Open the Source Control tab in VSCode, all of the conflicting files will show up almost like when you're making a normal commit. Make sure to stage all of the files by hovering over the "+" button
 
-![Plus sign button on VSCode committed file for staging](/images/vscode-stage-button.png)
+    ![Plus sign button on VSCode committed file for staging](/images/vscode-stage-button.png)
 
 9. Press the commit button to finish this part of the rebase. You can optionally change the commit message but it's better to just keep the original one that it has in there. 
 
@@ -123,9 +123,9 @@ The following steps are similar to the section above (for solving normal merge c
 
 5. Here, you can see what I was mentioning at the start of this section. You can view the files that have merge conflicts in the "Source Control" tab on the left bar of VSCode. However, when you open them to see the conflicts you will see how impossible it is to try to resolve them this way (the normal way). This is what nbdime is for: 
 
-(You can start at step 6 if you have VSCode set to your git editor and have done `git rebase --abort` to reset back to before your rebase failed)<br>
+(You can start at step 6 if you have VSCode set to your git editor)<br>
 
-6. Make sure that your dev environment is turned on. You're likely using a conda dev environment which would be `conda activate your-env-name`. 
+6. Make sure that your local repository and console is back to normal by doing a `git rebase --abort`. Also make sure that your dev environment is turned on. You're likely using a conda dev environment which would be `conda activate your-env-name`. 
 
 7. Do `pip install nbdime`.
 
@@ -147,11 +147,56 @@ The following steps are similar to the section above (for solving normal merge c
 
 12. The editor will open in your browser and look something like: 
 
-![Header of nbd editor in browser that shows Notebook Merge and other items](/images/nbd-editor.png)
+    ![Header of nbd editor in browser that shows Notebook Merge and other items](/images/nbd-editor.png)
 
 13. Now you can scroll through your whole notebook cell-by-cell. Although it's a lot to take in, just know that there isn't actually a whole lot for you to do at this point!
 
-14. First, 
+14. First, you'll have to decide if you care about cell **outputs** that cause merge conflicts. In most cases, it's likely that you don't care about the outputs because as long as the actual code that you need is all in the right places, you can just rerun the whole notebook after you're done rebasing to get the outputs you want. 
+
+    For this reason, nbdime gives you the option at the top right of the page to clear all outputs that are causing merge conflicts: 
+
+    ![Checkbox at the top right of the nbd merge editor that says Clear conflicted cell outputs](/images/clear-conflicting-outputs.png)
+
+    You'll notice that each cell has a "Clear outputs" button at the top right so you can also go through each of them individually to pick-and-choose which outputs to delete or keep. Although, it is usually safe just to use the "Clear conflicted cell outputs" button. 
+
+15. Now you will go through and find all of the cells that say "Conflicting cell operations" at the top bar. These can be confusing to look at, but remember what your goal is here: 
+
+    Your branch's code changes the same lines/cells of code that the new changes you're trying to pull from main do. This tool is helping you decide which lines should be kept or deleted. 
+
+    Each conflicting cell will look something like: 
+
+    ![Nbdime merge tool showing a conflicting cell by comparing local and remote changes](/images/conflicting-cells.png)
+
+    In the above picture, there are two different code blocks that are trying to be put in the **same** notebook cell. In this case, the entire cell is different, but quite often it can be just 1 or 2 lines of code within the cell that causes a conflict. 
+
+    You will now have to look at each code cell and decide which one you want to keep, but you also have the options to keep or delete both! 
+
+    If you know that you only want to keep one cell, then simply check the "Delete cell" button on the cell you do not want. You'll notice that it is now blurred out:
+
+    ![Same picture of conflicting cell but the top cell is marked with the delete cell button](/images/delete-cell.png)
+
+    If you want to delete both cells, then check both "Delete cell" buttons. If you want to keep both cells, then you won't have to do anything! 
+
+    Once you have decided what to do with these code blocks, mark this conflicted cell as completed by clicking the "Resolve conflict" button at the top right: 
+
+    ![Top bar of conflicting cell that shows the resolve conflict button](/images/resolve-conflict.png)
+
+16. Continue doing step 15 for the rest of the conflicting cells in the file. 
+
+17. Once you have dealt with all the conflicting cells, scroll all the way back up to the top of the file where you will see buttons to save the file and close the tool. Press the save button and then the close tool button: 
+
+    ![Save and close tool buttons at the top of the nbdime merge tool](/images/save-and-close.png)
+
+    **NOTE:** I've noticed that it often will still show a popup message saying something like "there are still conflicting cells" even though I know for sure that I've dealt with all of them. If you are 99% sure that you've taken care of all of them, then it is safe to ignore this message and continue. You will still be able to double check in the next step. 
+
+18. Now you will verify that all the conflicts you resolved are correct and that the notebook has all the code that it should. If you cleared the outputs of cells, now is **NOT** the time to rerun the notebook, we will do this after the rebase is done. 
+
+    Our current goal is simply to look at the file and make sure the code cells are as they should be. You will see in VSCode under the "Source Control" tab that your notebook is already saved and staged for you!  
+
+    ![VSCode source control files that have the merged notebook and the auto generated .orig notebook file](/images/staged-conflict-file.png)
+
+
+If you are working in more than one notebook that have merge conflicts, you will have to do this for each notebook by running the same `git mergetool --tool=nbdime your-notebook-name.ipynb` command and doing the same steps for each file. 
 
 ## Step 4 or 3: Making a remote copy of your branch
 
