@@ -19,8 +19,8 @@
 
     IF YOUR BRANCH HAS A REMOTE VERSION (you did step 4 first): Now that your branch has been rebased with main, you'll have to update the remote version of your branch to reflect that by doing another `git push origin your-branch-name`
 
-
-Steps to deal with merge conflicts are listed in the [Fixing a merge conflict](#fixing-a-merge-conflict) section. 
+Steps to deal with merge conflicts are listed in the [Fixing a merge conflict](#fixing-a-merge-conflict) section. <br>
+Steps to deal with merge conflicts for Jupyter notebooks are in the [Fixing merge conflicts in a jupyter notebook](#fixing-merge-conflicts-in-a-jupyter-notebook) section.
 
 [Step 4 or 3](#step-4-or-3-making-a-remote-copy-of-your-branch): Make a remote copy of your branch by doing `git push origin your-branch-name`. You can verify that it worked on your repository's GitHub page, under the "branches" section. <br>
 
@@ -83,23 +83,75 @@ Unfortunately, doing this will sometimes result in a **merge conflict** which ca
 
 ### Fixing a merge conflict
 
-If VSCode is screaming at you and you tried to rebase but it's stuck and everything is a disaster, don't worry this is normal! 
+1. If this is your first time dealing with merge conflicts, you probably haven't set VSCode (or your preferred text editor) to be your git editor. If you haven't, then it is likely that your console appears to be running/stuck because of the failed rebase. You can stop this by either doing Control+c on your keyboard, or by typing `q` and pressing enter in the console. If you have set VSCode to be your editor and your console appears to be normal, then you're safe to move on. 
 
-1. If the rebase failed and you are stuck you can do `git rebase --abort`. 
-2. You will want to set VSCode to be your git editor by doing `git config --global core.editor "code --wait"`
-3. With VSCode as your editor, retry the rebase with `git rebase main`
-4. Now VSCode will go through each of the commits that make a merge conflict and will open the corresponding files with edits that look like: 
+2. Now that your console is back to normal, you can revert back to as if you never tried to rebase by doing `git rebase --abort`. 
+
+3. Make sure that VSCode (or preferred text editor) is your git editor by doing `git config --global core.editor "code --wait"`. 
+
+4. With VSCode as your editor, retry the rebase with `git rebase main`. 
+
+5. In your "Source Control" tab on the left bar, you will notice that there will be a list of files that have conflicts. You can tell that they have conflicts by opening them and looking for big blocks that look like: 
 
 ![Current/incoming changes in a VSCode window to resolve merge conflicts](/images/vscode-merge-conflict.png) <br>
 
-5. Each of these cases that VSCode is marking with "Current Change" and "Incoming Change" are places where Git can't decide which change it should make. These issues usually happen when people make different changes to the same line in the file. Go through each of these and use your best judgement to decide which lines of code should remain.
-6. Save the file once you are done with all the highlighted conflicts 
-7. Open the Source Control tab in VSCode, all of the conflicting files will show up almost like when you're making a normal commit. Make sure to stage all of the files by hovering over the "+" button
+6. Each of these cases that VSCode is marking with "Current Change" and "Incoming Change" are places where Git can't decide which change it should make. These issues usually happen when people make different changes to the same line in the file. Go through each of these and use your best judgement to decide which lines of code should remain.
+
+7. Save the file once you are done with all the highlighted conflicts 
+
+8. Open the Source Control tab in VSCode, all of the conflicting files will show up almost like when you're making a normal commit. Make sure to stage all of the files by hovering over the "+" button
 
 ![Plus sign button on VSCode committed file for staging](/images/vscode-stage-button.png)
 
-8. Press the commit button to finish this part of the rebase. You can optionally change the commit message but it's better to just keep the original one that it has in there. 
-9. Keep doing steps 5-8 until the rebase is done. VSCode is pretty good at automatically doing this but if it doesn't seem like it's doing anything try doing `git rebase --continue`. 
+9. Press the commit button to finish this part of the rebase. You can optionally change the commit message but it's better to just keep the original one that it has in there. 
+
+10. Keep doing steps 6-9 until the rebase is done. VSCode is pretty good at automatically doing this but if it doesn't seem like it's doing anything try doing `git rebase --continue`. 
+
+### Fixing merge conflicts in a Jupyter notebook
+
+Git tracks changes in Jupyter notebooks in their raw format which is a giant JSON file that makes it basically impossible to resolve merge conflicts the normal way. There are a few ways to solve this but I have found [nbdime](https://nbdime.readthedocs.io/en/latest/) to be incredibly easy to use for what I need it for. 
+
+The following steps are similar to the section above (for solving normal merge conflicts), but I have repeated some steps in case this is your first time dealing with merge conflicts:
+
+1. If this is your first time dealing with merge conflicts, you probably haven't set VSCode (or your preferred text editor) to be your git editor. If you haven't, then it is likely that your console appears to be running/stuck because of the failed rebase. You can stop this by either doing Control+c on your keyboard, or by typing `q` and pressing enter in the console. If you have set VSCode to be your editor and your console appears to be normal, then you're safe to move on. 
+
+2. Now that your console is back to normal, you can revert back to as if you never tried to rebase by doing `git rebase --abort`. 
+
+3. Make sure that VSCode (or preferred text editor) is your git editor by doing `git config --global core.editor "code --wait"`. 
+
+4. With VSCode as your editor, retry the rebase with `git rebase main`.
+
+5. Here, you can see what I was mentioning at the start of this section. You can view the files that have merge conflicts in the "Source Control" tab on the left bar of VSCode. However, when you open them to see the conflicts you will see how impossible it is to try to resolve them this way (the normal way). This is what nbdime is for: 
+
+(You can start at step 6 if you have VSCode set to your git editor and have done `git rebase --abort` to reset back to before your rebase failed)<br>
+
+6. Make sure that your dev environment is turned on. You're likely using a conda dev environment which would be `conda activate your-env-name`. 
+
+7. Do `pip install nbdime`.
+
+8. Verify that it worked by doing `conda list nbdime`. 
+
+9. I only need nbdime for resolving merge conflicts, and for that you can just do `git-nbmergetool config --enable`. If you want the other features, you would do `nbdime config-git --enable`. 
+
+    **YOU WILL HAVE TO DO THIS STEP ONCE FOR EVERY REPOSITORY**
+
+    If you want to understand more about what this is doing, go into your repository in your system's file manager, show the hidden files, and go into your .git folder to open the 'config' file in it. If you haven't messed around with this repository's git config file before, you'll see all the changes made after the [branch "main"] section. 
+
+10. Now you can retry your rebase by doing `git rebase main`. 
+
+    **NOTE:** For very large notebooks with lots of outputs, doing the rebase will take a LONG time. You will know this is the case when your console looks like it's stuck/loading and if in your files you'll see a bunch of newly created files that have weird names like "MERGE&FILE" or something like that. 
+    
+    This should be fine and will hopefully take a few minutes depending on the size of your file. You will know when it's done when your console is back to normal and you'll see in the "Source Control" tab that your files look like how they normally would when using VSCode to resolve merge conflicts.
+
+11. Open the nbdime merge editor by doing `git mergetool --tool=nbdime your-notebook-name.ipynb`
+
+12. The editor will open in your browser and look something like: 
+
+![Header of nbd editor in browser that shows Notebook Merge and other items](/images/nbd-editor.png)
+
+13. Now you can scroll through your whole notebook cell-by-cell. Although it's a lot to take in, just know that there isn't actually a whole lot for you to do at this point!
+
+14. First, 
 
 ## Step 4 or 3: Making a remote copy of your branch
 
